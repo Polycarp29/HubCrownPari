@@ -44,29 +44,29 @@ Route::middleware('guest')->group(
                 function () {
                     //Pages after Verification
                     Route::middleware('account.type:Affiliates')->group(
-                        function(){
+                        function () {
                             // Affiliates Dashboard
                             Route::get('/affiliate', [Dashboard::class, 'index'])->name('affiliates.dashboard');
                         }
                     );
 
-                     Route::middleware('account.type:Creators')->group(
-                        function(){
+                    Route::middleware('account.type:Creators')->group(
+                        function () {
                             // Creators Dashboard
                             Route::get('/creators', [Dashboard::class, 'index'])->name('creators.dashboard');
                         }
                     );
 
-                     Route::middleware('account.type:Organizations')->group(
-                        function(){
+                    Route::middleware('account.type:Organizations')->group(
+                        function () {
                             // Organization Dashboard
-                            Route::get('/organization', [Dashboard::class, 'index'])->name('affiliates.dashboard');
+                            Route::get('/organization', [Dashboard::class, 'index'])->name('organizations.dashboard');
                         }
                     );
 
 
                     Route::middleware('account.type:Admin')->group(
-                        function(){
+                        function () {
                             // Admin Dashboard
                         }
                     );
