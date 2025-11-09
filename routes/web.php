@@ -5,8 +5,9 @@ use App\Livewire\Pages\Auth\Register;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Pages\Auth\VerifyOTP;
 use App\Livewire\Pages\Auth\ForgotPassword;
-use App\Http\Controllers\Pages\Auth\GoogleController;
 use App\Livewire\Pages\Onboarding\SelectAccountType;
+use App\Http\Controllers\Pages\Auth\GoogleController;
+use App\Http\Controllers\Pages\Users\Affiliates\Pages\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,21 +43,31 @@ Route::middleware('guest')->group(
             Route::middleware('email.verified')->group(
                 function () {
                     //Pages after Verification
-                    Route::middleware('account.type:Affiliate')->group(
+                    Route::middleware('account.type:Affiliates')->group(
                         function(){
                             // Affiliates Dashboard
+                            Route::get('/affiliate', [Dashboard::class, 'index'])->name('affiliates.dashboard');
                         }
                     );
 
-                     Route::middleware('account.type:Creator')->group(
+                     Route::middleware('account.type:Creators')->group(
                         function(){
-                            // Affiliates Dashboard
+                            // Creators Dashboard
+                            Route::get('/creators', [Dashboard::class, 'index'])->name('creators.dashboard');
                         }
                     );
 
-                     Route::middleware('account.type:Organization')->group(
+                     Route::middleware('account.type:Organizations')->group(
                         function(){
-                            // Affiliates Dashboard
+                            // Organization Dashboard
+                            Route::get('/organization', [Dashboard::class, 'index'])->name('affiliates.dashboard');
+                        }
+                    );
+
+
+                    Route::middleware('account.type:Admin')->group(
+                        function(){
+                            // Admin Dashboard
                         }
                     );
                 }

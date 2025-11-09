@@ -24,6 +24,8 @@
 
     @livewireScripts
     <script src="{{  asset('js/toasterscript.js') }}"></script>
+    <script src="{{  asset('js/redirect.js') }}"></script>
+
 </body>
 
 </html>

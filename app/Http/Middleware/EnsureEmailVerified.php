@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsureEmailVerified
@@ -16,7 +17,9 @@ class EnsureEmailVerified
     public function handle(Request $request, Closure $next): Response
     {
 
-        if(auth()->check() && !auth()->is_verified){
+        $user = Auth::user();
+
+        if(auth()->check() && !$user->is_verified){
             // return back to verify otp
             return redirect()->route('otp.verify')->with('error', 'Please verify your account.');
         }

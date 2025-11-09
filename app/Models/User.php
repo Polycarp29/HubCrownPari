@@ -22,6 +22,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'otp',
+        'status',
+        'is_verified',
+        'failed_logins',
+        'locked_until',
+        'google_id',
+        'otp_expires_at',
+        'last_otp_sent_at',
+        'last_seen_at',
+        'email_verified_at',
+        'remember_token',
     ];
 
     /**
@@ -42,6 +53,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'otp_expires_at' => 'datetime',
+        'last_otp_sent_at' => 'datetime',
+        'last_seen_at' => 'datetime',
     ];
 
 
@@ -49,7 +63,8 @@ class User extends Authenticatable
      * Relationships
      */
 
-    public function usertypes(){
+    public function usertypes()
+    {
         return  $this->belongsToMany(UserTypes::class, 'user_types_pivots', 'user_types_id', 'user_id');
     }
 }
