@@ -2,8 +2,9 @@
 
 namespace App\Models\Defaults;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserTypes extends Model
 {
@@ -19,4 +20,8 @@ class UserTypes extends Model
     /**
      * Relationships
      */
+
+    public function users(){
+        return $this->belongsMany(User::class, 'user_types_pivots', 'user_id', 'user_types_id');
+    }
 }

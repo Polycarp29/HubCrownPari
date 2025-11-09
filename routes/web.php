@@ -42,6 +42,23 @@ Route::middleware('guest')->group(
             Route::middleware('email.verified')->group(
                 function () {
                     //Pages after Verification
+                    Route::middleware('account.type:Affiliate')->group(
+                        function(){
+                            // Affiliates Dashboard
+                        }
+                    );
+
+                     Route::middleware('account.type:Creator')->group(
+                        function(){
+                            // Affiliates Dashboard
+                        }
+                    );
+
+                     Route::middleware('account.type:Organization')->group(
+                        function(){
+                            // Affiliates Dashboard
+                        }
+                    );
                 }
             );
         }
