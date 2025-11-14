@@ -64,6 +64,11 @@
             "php-http/discovery": true
         }
     },
+
+    "files" : [
+        "app/Helpers/UserAccess/CheckUserAccess.php"
+    ],
+    
     "minimum-stability": "stable",
     "prefer-stable": true
 }

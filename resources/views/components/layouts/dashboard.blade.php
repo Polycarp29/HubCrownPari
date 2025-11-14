@@ -20,7 +20,9 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 </head>
 
-<body>
+<body  class="flex h-screen bg-gray-50">
+        <!-- Sidebar Navigation -->
+    @livewire('components.common.navigation-bar')
     {{ $slot }}
 
     <script>
