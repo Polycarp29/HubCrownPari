@@ -5,10 +5,12 @@ use App\Livewire\Pages\Auth\Register;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Pages\Auth\VerifyOTP;
 use App\Livewire\Pages\Auth\ForgotPassword;
+use App\Http\Controllers\Pages\Auth\AuthController;
 use App\Livewire\Pages\Onboarding\SelectAccountType;
 use App\Http\Controllers\Pages\Auth\GoogleController;
-use App\Http\Controllers\Pages\Auth\AuthController;
-use App\Http\Controllers\Pages\Users\Affiliates\Pages\Dashboard;
+use App\Http\Controllers\Pages\Users\Creators\Pages\CreatorsDashboard;
+use App\Http\Controllers\Pages\Users\Affiliates\Pages\AffiliatesDashboard;
+use App\Http\Controllers\Pages\Users\Organizations\Pages\OrganizationDashboard;
 
 // Guest routes
 Route::middleware('guest')->group(function () {
@@ -23,24 +25,24 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/onboarding', SelectAccountType::class)->name('account.type');
     Route::get('/verify_otp', VerifyOTP::class)->name('otp.verify');
-    Route::post('/logout', [Dashboard::class, 'logout'])->name('system.logout');
+    Route::post('/logout', [AffiliatesDashboard::class, 'logout'])->name('system.logout');
     
     // Email verified routes
     Route::middleware('email.verified')->group(function () {
         
         // Affiliates
         Route::middleware('account.type:Affiliates')->group(function () {
-            Route::get('/affiliate', [Dashboard::class, 'index'])->name('affiliates.dashboard');
+            Route::get('/affiliate', [AffiliatesDashboard::class, 'index'])->name('affiliates.dashboard');
         });
 
         // Creators
         Route::middleware('account.type:Creators')->group(function () {
-            Route::get('/creators', [Dashboard::class, 'index'])->name('creators.dashboard');
+            Route::get('/creators', [CreatorsDashboard::class, 'index'])->name('creators.dashboard');
         });
 
         // Organizations
         Route::middleware('account.type:Organizations')->group(function () {
-            Route::get('/organization', [Dashboard::class, 'index'])->name('organization.dashboard');
+            Route::get('/organization', [OrganizationDashboard::class, 'index'])->name('organization.dashboard');
         });
 
         // Admin
