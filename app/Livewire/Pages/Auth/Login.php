@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages\Auth;
 
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ use Illuminate\Http\Exceptions\ThrottleRequestsException;
 class Login extends Component
 {
 
-     public string $email    = '';
+    public string $email    = '';
     public string $password = '';
     public bool   $remember = false;
 
@@ -31,21 +32,18 @@ class Login extends Component
     #[Layout('components.layouts.app')]
 
 
-     public function login(): void
+    public function login(): void
     {
-        $this->formError = null;   // reset global error each submit
+        $this->formError = null;
 
         try {
-
             $credentials = $this->validate();
-
 
             $key = 'login:' . strtolower($this->email) . '|' . request()->ip();
             if (RateLimiter::tooManyAttempts($key, 5)) {
                 $seconds = RateLimiter::availableIn($key);
-                throw new ThrottleRequestsException("Too many attempts. Try again in {$seconds} s.");
+                throw new ThrottleRequestsException("Too many attempts. Try again in {$seconds} s.");
             }
-
 
             if (! Auth::attempt($credentials, $this->remember)) {
                 RateLimiter::hit($key, 60);
@@ -56,34 +54,51 @@ class Login extends Component
 
             RateLimiter::clear($key);
             session()->regenerate();
-            
-            // If remember me is checked, the Auth::attempt already handles the remember token
-            if ($this->remember) {
-                // Laravel's Auth::attempt with remember=true automatically handles the remember token
-                // The remember cookie will last for 5 years as configured in auth config
-                session()->put('auth.password_confirmed_at', time());
-            }
+
+            $user = Auth::user();
+
+            // Remove the print statement!
+            Log::info('Auth user logged in', ['user_id' => $user->id, 'email' => $user->email]);
 
             $this->dispatch('toast', message: 'Logged in successfully!', type: 'success');
 
-            $this->redirect(route('dashboard'), navigate: true);
-
+            $this->redirectRoute($this->getDashboardRoute($user), navigate: true);
         } catch (ValidationException $e) {
-
-            throw $e;               // re‑throw so the inline messages show
-
+            throw $e;
         } catch (ThrottleRequestsException $e) {
-            /** Throttle → global banner + toast*/
             $this->formError = $e->getMessage();
             $this->dispatch('toast', message: $e->getMessage(), type: 'error');
-
         } catch (\Throwable $e) {
-            /**  Catch‑all */
-            report($e);             // log it
+            report($e);
             $msg = 'Unexpected error, please try again.';
             $this->formError = $msg;
             $this->dispatch('toast', message: $msg, type: 'error');
         }
+    }
+
+
+    protected function getDashboardRoute($user): string
+    {
+        // Refresh the user to ensure relationships are loaded
+        $user->refresh();
+
+        Log::info('User data', [
+            'id' => $user->id,
+            'usertypes_count' => $user->usertypes->count(),
+            'usertypes' => $user->usertypes->toArray(),
+        ]);
+
+        $userType = $user->usertypes->first()?->user_type_name ?? null;
+
+        Log::info('Determined user type', ['type' => $userType]);
+
+        return match ($userType) {
+            'Affiliates' => 'affiliates.dashboard',
+            'Creators' => 'creators.dashboard',
+            'Organizations' => 'organization.dashboard',
+            'Admin' => 'admin.dashboard',
+            default => 'affiliates.dashboard', // Change default to a valid route
+        };
     }
     public function render()
     {

@@ -117,6 +117,7 @@ class VerifyOTP extends Component
 
     protected function getDashboardRoute($user): string
     {
+        $user->refresh();
         $userType = $user->usertypes->first()?->user_type_name ?? null;
 
         Log::info('User type: ' . $userType);

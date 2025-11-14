@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Defaults\UserTypes;
+use App\Models\User\Profiles\BusinessProfile;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -66,5 +67,14 @@ class User extends Authenticatable
     public function usertypes()
     {
         return  $this->belongsToMany(UserTypes::class, 'user_types_pivots', 'user_types_id', 'user_id');
+    }
+
+
+    public function profile(){
+        return $this->hasOne(User::class, 'user_id');
+    }
+
+    public function business(){
+        return $this->hasOne(BusinessProfile::class, 'user_id');
     }
 }

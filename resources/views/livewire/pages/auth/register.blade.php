@@ -130,7 +130,7 @@
             </button>
             <div class="flex flex-row justify-between">
                 <p class="dark:text-gray-200 text-gray-700">Already have an account?</p>
-                <a class="text-blue-600 hover:underline">Sign in</a>
+                <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Sign in</a>
             </div>
         </form>
 

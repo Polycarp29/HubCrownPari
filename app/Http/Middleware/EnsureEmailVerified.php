@@ -21,7 +21,7 @@ class EnsureEmailVerified
 
         if(auth()->check() && !$user->is_verified){
             // return back to verify otp
-            return redirect()->route('otp.verify')->with('error', 'Please verify your account.');
+            return redirect()->route('account.type')->with('error', 'Please verify your account.');
         }
         return $next($request);
     }

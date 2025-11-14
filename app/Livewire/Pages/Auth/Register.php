@@ -79,9 +79,9 @@ class Register extends Component
         Auth::login($user);
 
         // Redirect to another page
+        // $this->dispatch('redirect');
 
-
-        $this->dispatch('redirect');
+        return redirect()->to('/onboarding');
 
 
     }
