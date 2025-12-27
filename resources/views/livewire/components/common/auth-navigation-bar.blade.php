@@ -1,4 +1,4 @@
-<div class="bg-gray-950 p-4  border-b border-gray-800 border-2">
+<div class="bg-gray-950 p-4  border-b border-gray-800">
     <div class="container mx-auto  flex justify-start">
         <!-- Logo space--->
         <div class="w-20 h-auto">
