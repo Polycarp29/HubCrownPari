@@ -15,15 +15,15 @@ return new class extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->string('full_name');
-            $table->enum('gender', ['male', 'female', 'non-binary', 'other']);
+            $table->string('full_name')->nullable();
+            $table->enum('gender', ['male', 'female', 'non-binary', 'other'])->nullable();
             $table->string('city')->nullable();
-            $table->string('state', 100);
-            $table->string('postal_code', 20);
-            $table->string('country');
-            $table->string('address_line');
+            $table->string('state', 100)->nullable();
+            $table->string('postal_code', 20)->nullable();
+            $table->string('country')->nullable();
+            $table->string('address_line')->nullable();
             $table->string('profile_avatar')->nullable();
-            $table->date('birth_date');
+            $table->date('birth_date')->nullable();
             $table->timestamps();
         });
     }

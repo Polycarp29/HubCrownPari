@@ -18,6 +18,7 @@
 </head>
 
 <body>
+    @livewire('components.common.auth-navigation-bar')
     {{ $slot }}
 
     <!---Livewire scripts --->

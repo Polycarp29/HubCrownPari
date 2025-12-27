@@ -33,7 +33,6 @@ class NavigationBar extends Component
         return $initials;
     }
 
-   
     public function render()
     {
         return view('livewire.components.common.navigation-bar');

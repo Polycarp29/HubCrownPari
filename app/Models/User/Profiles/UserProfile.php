@@ -24,6 +24,7 @@ class UserProfile extends Model
         'birth_date',
         'created_at',
         'updated_at',
+        'is_complete',
     ];
 
 

@@ -8,9 +8,11 @@ use App\Livewire\Pages\Auth\ForgotPassword;
 use App\Http\Controllers\Pages\Auth\AuthController;
 use App\Livewire\Pages\Onboarding\SelectAccountType;
 use App\Http\Controllers\Pages\Auth\GoogleController;
+use App\Http\Controllers\Pages\Users\General\Profile;
 use App\Http\Controllers\Pages\Users\Creators\Pages\CreatorsDashboard;
 use App\Http\Controllers\Pages\Users\Affiliates\Pages\AffiliatesDashboard;
 use App\Http\Controllers\Pages\Users\Organizations\Pages\OrganizationDashboard;
+use App\Livewire\Pages\User\Profile\ProfileWidgets;
 
 // Guest routes
 Route::middleware('guest')->group(function () {
@@ -29,10 +31,14 @@ Route::middleware('auth')->group(function () {
     
     // Email verified routes
     Route::middleware('email.verified')->group(function () {
+
+        // General Routes
+        Route::get('/profile', ProfileWidgets::class)->name('profile.view');
         
         // Affiliates
         Route::middleware('account.type:Affiliates')->group(function () {
             Route::get('/affiliate', [AffiliatesDashboard::class, 'index'])->name('affiliates.dashboard');
+            
         });
 
         // Creators

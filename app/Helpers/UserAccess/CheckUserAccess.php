@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('userHasAccess')) {
-    function userHasAcces(string $requestedType)
+    function userHasAccess(string $requestedType)
     {
         $user = Auth::user();
         if (!$user) return false;

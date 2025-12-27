@@ -1,3 +1,4 @@
+
 <div class="min-h-screen flex items-center justify-center px-4 bg-gray-100 dark:bg-gray-950">
     <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl w-full max-w-md p-8 space-y-6">
         <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-white">Welcome back</h1>
